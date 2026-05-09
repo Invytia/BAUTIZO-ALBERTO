@@ -126,22 +126,21 @@
             color: #000;
         }
 
-        /* --- ANIMACIONES Y EFECTO SUPERPUESTO --- */
+        /* --- ANIMACIONES Y EFECTO SUPERPUESTO REFORZADO --- */
         .fade-in { 
             opacity: 0; 
             transform: translateY(20px); 
             transition: all 1s ease-out; 
             position: relative; 
             z-index: 10;
-            /* EFECTO SUPERPUESTO: Halo blanco para ignorar las flores del fondo */
-            text-shadow: 0 0 12px #ffffff, 0 0 6px #ffffff, 0 0 2px #ffffff;
+            /* EFECTO SUPERPUESTO REFORZADO: Halo blanco para ignorar las flores del fondo */
+            text-shadow: 0 0 15px #ffffff, 0 0 10px #ffffff, 0 0 5px #ffffff, 0 0 2px #ffffff;
         }
         .fade-in.visible { opacity: 1; transform: translateY(0); }
 
         /* Saturación de texto */
         .fade-in h1, .fade-in h2, .fade-in h3, .fade-in p {
-            font-weight: 500;
-            color: #000 !important;
+            color: #000000 !important;
         }
 
         .text-shimmer {
@@ -234,7 +233,7 @@
                 </div>
             </div>
 
-            <p class="mt-12 font-cursive text-2xl md:text-3xl text-gray-400 max-w-lg mx-auto leading-relaxed fade-in">
+            <p class="mt-12 font-cursive text-3xl md:text-4xl text-black max-w-lg mx-auto leading-relaxed fade-in" style="font-weight: 600;">
                 "Hay momentos inolvidables que se atesoran en el corazón para siempre. Gracias por ser parte de mi historia."
             </p>
         </section>
@@ -246,7 +245,7 @@
             <div class="max-w-2xl mx-auto space-y-16">
                 <div class="fade-in">
                     <p class="uppercase tracking-[0.4em] text-[9px] text-gray-400 mb-8">Con la bendición de mi madre</p>
-                    <h3 class="font-name text-3xl text-black font-light italic text-shimmer">Claudia Jiménez Gorostieta</h3>
+                    <h3 class="font-name text-4xl md:text-5xl text-black font-bold italic">Claudia Jiménez Gorostieta</h3>
                 </div>
 
                 <div class="fade-in">
