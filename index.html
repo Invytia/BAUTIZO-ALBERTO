@@ -14,7 +14,7 @@
             --glass-bg: rgba(0, 0, 0, 0.02);
             --glass-border: rgba(0, 0, 0, 0.1);
             --accent-silver: #a1a1aa;
-            --text-main: #1a1a1a;
+            --text-main: #000000; /* Saturado a negro puro */
             --glitter-color: rgba(180, 180, 180, 0.4); /* Glitter Plateado */
         }
 
@@ -33,24 +33,19 @@
         .floral-frame {
             position: absolute;
             pointer-events: none;
-            z-index: 1; /* Bajado para que el texto (z-index 10) esté encima */
-            opacity: 0.3; /* Transparencia para facilitar la lectura */
+            z-index: 1; 
+            opacity: 0.25; /* Reducida un poco más para ayudar a la lectura */
             background-size: contain;
             background-repeat: no-repeat;
         }
 
-        /* Usando el Ramo (Imagen Izquierda) para enmarcar esquinas */
         .floral-tl { top: -20px; left: -20px; width: 350px; height: 350px; background-image: url('assets/flor-ramo.png'); }
         .floral-br { bottom: -20px; right: -20px; width: 350px; height: 350px; background-image: url('assets/flor-ramo.png'); transform: rotate(180deg); }
-
-        /* Usando la Rosa con tallo (Imagen Centro) para laterales */
-        .floral-side-l { top: 40%; left: -80px; width: 250px; height: 400px; background-image: url('assets/flor-tallo.png'); opacity: 0.15; }
-        .floral-side-r { top: 20%; right: -80px; width: 250px; height: 400px; background-image: url('assets/flor-tallo.png'); opacity: 0.15; transform: scaleX(-1); }
-
-        /* Usando la Cabeza de rosa (Imagen Derecha) como acento */
+        .floral-side-l { top: 40%; left: -80px; width: 250px; height: 400px; background-image: url('assets/flor-tallo.png'); opacity: 0.12; }
+        .floral-side-r { top: 20%; right: -80px; width: 250px; height: 400px; background-image: url('assets/flor-tallo.png'); opacity: 0.12; transform: scaleX(-1); }
         .floral-accent { display: inline-block; width: 60px; height: 60px; background-image: url('assets/flor-cabeza.png'); background-size: contain; vertical-align: middle; margin: 0 10px; }
 
-        /* --- EFECTO LIQUID GLASS (Ajustado a White Edition) --- */
+        /* --- EFECTO LIQUID GLASS --- */
         .liquid-glass {
             background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(0,0,0,0.01));
             backdrop-filter: blur(15px);
@@ -131,13 +126,26 @@
             color: #000;
         }
 
-        /* --- ANIMACIONES --- */
-        .fade-in { opacity: 0; transform: translateY(20px); transition: all 1s ease-out; position: relative; z-index: 10; }
+        /* --- ANIMACIONES Y EFECTO SUPERPUESTO --- */
+        .fade-in { 
+            opacity: 0; 
+            transform: translateY(20px); 
+            transition: all 1s ease-out; 
+            position: relative; 
+            z-index: 10;
+            /* EFECTO SUPERPUESTO: Halo blanco para ignorar las flores del fondo */
+            text-shadow: 0 0 12px #ffffff, 0 0 6px #ffffff, 0 0 2px #ffffff;
+        }
         .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-        /* Texto Shimmer Monocromático */
+        /* Saturación de texto */
+        .fade-in h1, .fade-in h2, .fade-in h3, .fade-in p {
+            font-weight: 500;
+            color: #000 !important;
+        }
+
         .text-shimmer {
-            background: linear-gradient(to right, #000 20%, #888 40%, #000 60%, #000 80%);
+            background: linear-gradient(to right, #000 20%, #666 40%, #000 60%, #000 80%);
             background-size: 200% auto;
             color: #000;
             background-clip: text;
@@ -180,7 +188,7 @@
         <div id="envelope-wrapper">
             <div id="envelope">
                 <div id="flap"></div>
-                <div class="text-center px-4 pt-12">
+                <div class="text-center px-4 pt-24">
                     <p class="font-cursive text-xl text-gray-400">Mis XV Años</p>
                     <h2 class="font-name text-2xl text-black tracking-widest mt-1 text-shimmer">VALLOLETH</h2>
                 </div>
@@ -309,7 +317,7 @@
         </section>
 
         <section class="py-24 px-6" id="confirmacion">
-            <div class="max-w-md mx-auto liquid-glass p-10 rounded-[3rem] text-center fade-in">
+            <div class="max-w-md mx-auto liquid-glass p-10 rounded-[3rem] text-center fade-in border border-gray-100">
                 <h2 class="font-name text-2xl mb-8 text-black uppercase tracking-widest">Confirmar Asistencia</h2>
                 <input type="text" id="rsvp-nombre" placeholder="Nombre completo" class="w-full p-4 mb-4 rounded-xl outline-none focus:border-black/20 transition-all">
                 <select id="rsvp-asistencia" class="w-full p-4 mb-6 rounded-xl outline-none">
