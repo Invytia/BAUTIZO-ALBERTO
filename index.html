@@ -1,1 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Bautizo - Alberto</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --celeste: #B2FFFF;
+            --celeste-dark: #7DBDBD; /* Para mejor contraste en bordes o iconos */
+            --beige: #F9F6F0;
+            --text-dark: #4A4A4A;
+            --gold: #D4AF37;
+        }
 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #E8E8E8; /* Fondo exterior para pantallas grandes */
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-dark);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Contenedor principal que simula la pantalla del celular */
+        .invitation-container {
+            max-width: 480px;
+            margin: 0 auto;
+            background-color: var(--beige);
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        /* Pantalla del Sobre (Animación inicial) */
+        .envelope-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ffffff 0%, var(--beige) 100%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1), opacity 1.5s ease;
+        }
+
+        .envelope-screen.open {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background-color: #fff;
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            z-index: 2;
+        }
+
+        .wax-seal {
+            width: 90px;
+            height: 90px;
+            background: radial-gradient(circle, #e6e6e6 0%, #cccccc 100%);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2), inset 0 0 10px rgba(255,255,255,0.5);
+            animation: pulse 2s infinite;
+            border: 2px solid #fff;
+            position: relative;
+        }
+
+        .wax-seal span {
+            font-family: 'Alex Brush', cursive;
+            font-size: 45px;
+            color: var(--celeste-dark);
+            margin-top: 5px;
+        }
+
+        .click-text {
+            margin-top: 30px;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-dark);
+            z-index: 3;
+            font-weight: 300;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(125, 189, 189, 0.4); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(125, 189, 189, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(125, 189, 189, 0); }
+        }
+
+        /* Cuerpo de la Invitación */
+        .invitation-body {
+            padding: 40px 20px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 1s ease 0.5s;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .invitation-body.visible {
+            opacity: 1;
+        }
+
+        /* Tipografías y Textos */
+        h1.script-name {
+            font-family: 'Alex Brush', cursive;
+            font-size: 65px;
+            color: var(--celeste-dark);
+            margin: 20px 0;
+            line-height: 1;
+        }
+
+        .subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 16px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .cursive-subtitle {
+            font-family: 'Alex Brush', cursive;
+            font-size: 30px;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin: 30px 0 10px;
+            color: var(--gold);
+        }
+
+        .names {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .divider {
+            width: 50px;
+            height: 1px;
+            background-color: var(--celeste-dark);
+            margin: 30px auto;
+        }
+
+        /* Fecha y Cuenta Regresiva */
+        .date-container {
+            background-color: var(--celeste);
+            padding: 40px 20px;
+            border-radius: 100px 100px 0 0;
+            margin-top: 40px;
+            color: var(--text-dark);
+        }
+
+        .big-date {
+            font-family: 'Playfair Display', serif;
+            font-size: 40px;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .time-box {
+            background: rgba(255,255,255,0.7);
+            padding: 10px;
+            border-radius: 10px;
+            min-width: 60px;
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 24px;
+            font-weight: 600;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .time-box small {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Ubicaciones */
+        .location-card {
+            background: #fff;
+            padding: 30px 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+            border: 1px solid rgba(178, 255, 255, 0.3);
+        }
+
+        .icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--celeste);
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .icon svg {
+            width: 20px;
+            fill: var(--text-dark);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--text-dark);
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 15px;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--celeste-dark);
+        }
+
+        /* Calendario */
+        .calendar-container {
+            margin: 40px 0;
+            padding: 20px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+        }
+
+        .calendar-header {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            font-size: 14px;
+        }
+
+        .day-name {
+            font-weight: 600;
+            font-size: 12px;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .day {
+            padding: 8px 0;
+            border-radius: 50%;
+        }
+
+        .day.highlight {
+            background-color: var(--celeste);
+            font-weight: bold;
+            color: var(--text-dark);
+            border: 1px solid var(--celeste-dark);
+        }
+
+        .day.empty {
+            color: transparent;
+        }
+        
+        .footer {
+            padding: 40px 0;
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="invitation-container">
+        
+        <div class="envelope-screen" id="envelope">
+            <div class="envelope-flap"></div>
+            <div class="wax-seal" onclick="openEnvelope()">
+                <span>A</span>
+            </div>
+            <p class="click-text">Clic para abrir</p>
+        </div>
+
+        <div class="invitation-body" id="invitationBody">
+            
+            <p class="subtitle">Mi Bautizo</p>
+            <h1 class="script-name">Alberto</h1>
+            
+            <p class="cursive-subtitle">Con la bendición de Dios</p>
+
+            <div class="divider"></div>
+
+            <p class="section-title">Mis Padres</p>
+            <p class="names">Carlos Alberto López</p>
+            <p class="names">&</p>
+            <p class="names">Valeria Smith</p>
+
+            <p class="section-title">Mis Padrinos</p>
+            <p class="names">Sergio Gonzáles</p>
+            <p class="names">&</p>
+            <p class="names">Bertha Smith</p>
+
+            <div class="date-container">
+                <p class="big-date">Sábado<br>25 Julio<br>2026</p>
+                
+                <div class="countdown">
+                    <div class="time-box"><span id="days">00</span><small>Días</small></div>
+                    <div class="time-box"><span id="hours">00</span><small>Hrs</small></div>
+                    <div class="time-box"><span id="mins">00</span><small>Min</small></div>
+                    <div class="time-box"><span id="secs">00</span><small>Seg</small></div>
+                </div>
+            </div>
+
+            <div class="location-card">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                </div>
+                <h3 style="font-family: 'Playfair Display', serif; margin-bottom: 10px;">Ceremonia Religiosa</h3>
+                <p style="font-size: 14px; margin-bottom: 15px;">Dulce Nombre de Jesús<br>Xicoténcatl, Tamaulipas</p>
+                <a href="https://share.google/0l81ImFaFhZp200hd" target="_blank" class="btn">Ver en Mapa</a>
+            </div>
+
+            <div class="location-card">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+                </div>
+                <h3 style="font-family: 'Playfair Display', serif; margin-bottom: 10px;">Recepción</h3>
+                <p style="font-size: 14px; margin-bottom: 15px;">Salón de Maestros Jubilados y Pensionados<br>Xicoténcatl, Tamaulipas</p>
+                <a href="https://share.google/fencX5oQGHzv1ChCK" target="_blank" class="btn">Ver en Mapa</a>
+            </div>
+
+            <div class="calendar-container">
+                <div class="calendar-header">Julio 2026</div>
+                <div class="calendar-grid">
+                    <div class="day-name">D</div>
+                    <div class="day-name">L</div>
+                    <div class="day-name">M</div>
+                    <div class="day-name">M</div>
+                    <div class="day-name">J</div>
+                    <div class="day-name">V</div>
+                    <div class="day-name">S</div>
+                    
+                    <div class="day empty"></div>
+                    <div class="day empty"></div>
+                    <div class="day empty"></div>
+                    
+                    <div class="day">1</div><div class="day">2</div><div class="day">3</div><div class="day">4</div>
+                    <div class="day">5</div><div class="day">6</div><div class="day">7</div><div class="day">8</div>
+                    <div class="day">9</div><div class="day">10</div><div class="day">11</div><div class="day">12</div>
+                    <div class="day">13</div><div class="day">14</div><div class="day">15</div><div class="day">16</div>
+                    <div class="day">17</div><div class="day">18</div><div class="day">19</div><div class="day">20</div>
+                    <div class="day">21</div><div class="day">22</div><div class="day">23</div><div class="day">24</div>
+                    <div class="day highlight">25</div><div class="day">26</div><div class="day">27</div><div class="day">28</div>
+                    <div class="day">29</div><div class="day">30</div><div class="day">31</div>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Bautizo+de+Alberto&dates=20260725T170000Z/20260726T020000Z&details=Acompañanos+a+celebrar+el+bautizo+de+Alberto.&location=Dulce+Nombre+de+Jesús,+Xicoténcatl,+Tamaulipas" target="_blank" class="btn" style="background-color: var(--celeste-dark); width: 100%; margin-bottom: 10px;">Agregar a Google Calendar</a>
+                    <a id="appleCalendarBtn" href="#" class="btn" style="background-color: var(--text-dark); width: 100%;">Agregar a Apple / Outlook</a>
+                </div>
+            </div>
+
+            <div class="footer">
+                <p>¡Te esperamos con mucha alegría!</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Animación de abrir el sobre
+        function openEnvelope() {
+            document.getElementById('envelope').classList.add('open');
+            document.getElementById('invitationBody').classList.add('visible');
+        }
+
+        // Cuenta Regresiva
+        const countDownDate = new Date("Jul 25, 2026 12:00:00").getTime();
+
+        const x = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerHTML = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerHTML = hours < 10 ? "0" + hours : hours;
+            document.getElementById("mins").innerHTML = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("secs").innerHTML = seconds < 10 ? "0" + seconds : seconds;
+
+            if (distance < 0) {
+                clearInterval(x);
+                document.querySelector(".countdown").innerHTML = "¡Hoy es el gran día!";
+            }
+        }, 1000);
+
+        // Generador de archivo .ics para Apple/Outlook Calendar
+        const icsContent = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Invytia//Bautizo Alberto//ES
+BEGIN:VEVENT
+DTSTART:20260725T170000Z
+DTEND:20260726T020000Z
+SUMMARY:Bautizo de Alberto
+LOCATION:Dulce Nombre de Jesús, Xicoténcatl, Tamaulipas
+DESCRIPTION:Acompáñanos a celebrar el bautizo de Alberto.
+END:VEVENT
+END:VCALENDAR`;
+
+        const appleBtn = document.getElementById('appleCalendarBtn');
+        const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+        appleBtn.href = window.URL.createObjectURL(blob);
+        appleBtn.download = 'Bautizo_Alberto.ics';
+    </script>
+</body>
+</html>
